@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Interface</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Customer Interface</h1>
+    <h2>Your Reservations</h2>
+    <ul>
+        {% for reservation in customer_reservations %}
+            <li>Name: {{ reservation.name }}, Party Size: {{ reservation.party_size }}</li>
+        {% endfor %}
+    </ul>
+    <form action="{{ url_for('reserve') }}" method="get">
+        <button type="submit">Reserve a Table</button>
+    </form>
+    <form action="{{ url_for('logout') }}" method="get">
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>
