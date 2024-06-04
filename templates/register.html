@@ -2,22 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <title>Register</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="static/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Register</h1>
-    <form action="{{ url_for('register') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button type="submit">Register</button>
+<body class="text-center">
+    <form action="{{ url_for('register') }}" method="post" class="form-signin">
+        <h1 >Welcome to Nair Mess</h1>
+        <h1 class="h3 mb-3 font-weight-bold">Register</h1>
+        <label for="username" class="sr-only">Username</label>
+        <input type="username" id="username" class="form-control" placeholder="Username" name="username" required autofocus>
+        <label for="password" class="sr-only">Password:</label>
+        <input type="password" id="password" class="form-control" placeholder="Password"name="password" required autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
     </form>
-    <form action="{{ url_for('login') }}" method="get">
-        <button type="submit">Back to Login</button>
+    <form action="{{ url_for('login') }}" method="get" class="form-signin">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Back to Login</button>
     </form>
 </body>
 </html>
