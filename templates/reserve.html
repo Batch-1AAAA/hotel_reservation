@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Reserve a Table</title>
+    <title>Make a Reservation</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link href="static/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
 </head>
 <body class="text-center">
-    
     <form action="{{ url_for('reserve') }}" method="post" class="form-signin">
-        <h1>Enter the details</h1>
+        <h1>Make a Reservation</h1>
         <label for="name" class="sr-only">Name</label>
         <input type="text" id="name" class="form-control" placeholder="Enter your name" name="name" required autofocus>
         
@@ -28,9 +27,9 @@
         <label for="special_comments" class="sr-only">Special comments</label>
         <input type="text" id="special_comments" class="form-control" placeholder="Special comments" name="special_comments" required autofocus>
         
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-        
-        <form class="form-signin">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Reserve</button>
+    </form>
+    <div class="form-signin">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <ul>
@@ -39,11 +38,10 @@
                 {% endfor %}
             </ul>
         {% endif %}
-    {% endwith %}
-        </form>
-        <form action="{{ url_for('logout') }}" method="get" class="form-signin">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
-        </form>
+        {% endwith %}
+    </div>
+    <form action="{{ url_for('logout') }}" method="get" class="form-signin">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
     </form>
 </body>
 </html>

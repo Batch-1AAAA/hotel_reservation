@@ -9,46 +9,52 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
 </head>
-<body class="text-center">
-    <form method="get" class="form-signin">
+<body class="form-signin">
+    <form class="form-signin">
         <h1>Admin Interface</h1>
         <h2>Reservation Queue</h2>
         <ul>
             {% for reservation in reservation_queue %}
-                <li>Name: {{ reservation.name }}, Party Size: {{ reservation.party_size }}</li>
+                <li>
+                    Name: {{ reservation['name'] }}, Party Size: {{ reservation['party_size'] }}
+                    <form action="{{ url_for('admin') }}" method="post" style="display: inline;" class="form-signin">
+                        <input type="hidden" name="reservation_id" value="{{ reservation['reservation_id'] }}">
+                        
+                    </form>
+                </li>
             {% endfor %}
         </ul>
         <h2>Reserved Tables</h2>
         <ul>
             {% for table in reserved_tables %}
-                <li>Name: {{ table.name }}, Party Size: {{ table.party_size }}</li>
+                <li>
+                    Name: {{ table['name'] }}, Party Size: {{ table['party_size'] }}
+                    <form action="{{ url_for('admin') }}" method="post" style="display: inline;"class="form-signin">
+                        <input type="hidden" name="reservation_id" value="{{ table['reservation_id'] }}">
+                        
+                    </form>
+                </li>
             {% endfor %}
         </ul>
-        <form action="{{ url_for('process_reservation') }}" method="get" class="form-signin">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Process Next Reservation</button>
-        </form>
-        <form action="{{ url_for('clear_reservations') }}" method="get" class="form-signin">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Clear Reservations</button>
-        </form>
-        <form action="{{ url_for('logout') }}" method="get" class="form-signin">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
+        <form action="{{ url_for('admin') }}" method="post" style="display: inline;">
+            <button class="btn btn-lg btn-primary btn-block" name="action" value="process_next" type="submit">Process Next Reservation</button>
+            <button class="btn btn-lg btn-primary btn-block" name="action" value="clear_reservations" type="submit">Clear All Reservations</button>
         </form>
     </form>
-
-    {% if reservation %}
-    <div class="reservation-action">
-        <h2>Reservation Action</h2>
-        <p>Name: {{ reservation.name }}</p>
-        <p>Party Size: {{ reservation.party_size }}</p>
-        <p>Phone: {{ reservation.phone }}</p>
-        <p>Email: {{ reservation.email_id }}</p>
-        <p>Special Comments: {{ reservation.special_comments }}</p>
-
-        <form action="{{ url_for('reservation_action') }}" method="post" class="form-signin">
-            <button class="btn btn-lg btn-success btn-block" type="submit" name="action" value="accept">Accept</button>
-            <button class="btn btn-lg btn-danger btn-block" type="submit" name="action" value="decline">Decline</button>
-        </form>
+    
+    <form action="{{ url_for('logout') }}" method="get" class="form-signin">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
+    </form>
+    <div class="form-signin">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="alert alert-{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
     </div>
-    {% endif %}
 </body>
 </html>

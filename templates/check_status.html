@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Check Reservation Status</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+</head>
+<body class="text-center">
+    <form action="{{ url_for('check_status') }}" method="post" class="form-signin">
+        <h1>Check Reservation Status</h1>
+        <label for="reservation_id" class="sr-only">Reservation ID</label>
+        <input type="text" id="reservation_id" class="form-control" placeholder="Enter Reservation ID" name="reservation_id" required autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Check Status</button>
+    </form>
+    <form action="{{ url_for('logout') }}" method="get" class="form-signin">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="form-signin">
+            <ul>
+                {% for category, message in messages %}
+                    {% if category == 'reservation_status_success' %}
+                        <li class="alert alert-success">{{ message }}</li>
+                    {% elif category == 'reservation_status_error' %}
+                        <li class="alert alert-danger">{{ message }}</li>
+                    {% elif category == 'reservation_status_pending' %}
+                        <li class="alert alert-warning">{{ message }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    {% endwith %}
+    {% if reservation %}
+        <p>Reservation ID: {{ reservation['reservation_id'] }}</p>
+        <p>Name: {{ reservation['name'] }}</p>
+        <p>Party Size: {{ reservation['party_size'] }}</p>
+        <p>Phone: {{ reservation['phone'] }}</p>
+        <p>Email: {{ reservation['email_id'] }}</p>
+        <p>Special Comments: {{ reservation['special_comments'] }}</p>
+        <p>Status: 
+            {% if reservation['status'] == 'Reserved' %}
+                Reserved
+            {% elif reservation['status'] == 'Pending' %}
+                Pending
+            {% else %}
+                {{ reservation['status'] }}
+            {% endif %}
+        </p>
+    {% endif %}
+</body>
+</html>
