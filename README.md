@@ -6,7 +6,7 @@ SCREENSHOTS:
 LOGIN PAGE
 
 ![Screenshot 2024L-06-06 205512](https://github.com/mrastrange/hotel_reservation/assets/79492151/f68a9381-9f6d-48aa-b493-84531b6669f3)
-REGISTER PAGE
+REGISTRATION PAGE
 
 ![Screenshot 2024-06-06 205450](https://github.com/mrastrange/hotel_reservation/assets/79492151/cad0eb25-fccd-4ed3-a335-094cc1699e44)
 CUSTOMER PAGE
@@ -18,4 +18,4 @@ ADMIN PAGE
 RESERVATION PAGE
 
 ![Screenshot 2024-06-06 205705](https://github.com/mrastrange/hotel_reservation/assets/79492151/be5f6d55-cdad-447c-8499-3abc8859752d)
-CHECKING RESERVATIO PAGE
+CHECKING RESERVATION PAGE
