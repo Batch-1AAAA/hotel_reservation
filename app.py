@@ -98,8 +98,38 @@ def index():
             return redirect(url_for('customer'))
     return redirect(url_for('login'))
 
+def load_users():
+    try:
+        with open('users.json', 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {'customers': [], 'admin': {'username': 'admin', 'password': 'admin'}}
+
+# Save users to JSON file
+def save_users(users):
+    with open('users.json', 'w') as f:
+        json.dump(users, f)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    users = load_users()
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        for customer in users['customers']:
+            if customer['username'] == username:
+                return 'Username already exists'
+
+        users['customers'].append({'username': username, 'password': password})
+        save_users(users)
+
+        return redirect(url_for('login'))
+    return render_template('register.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    users = load_users()
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -122,25 +152,6 @@ def login():
         else:
             return 'Invalid role'
     return render_template('login.html')
-
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        for customer in users['customers']:
-            if customer['username'] == username:
-                return 'Username already exists'
-
-        users['customers'].append({'username': username, 'password': password})
-
-        with open('users.json', 'w') as f:
-            json.dump(users, f)
-
-        return redirect(url_for('login'))
-    return render_template('register.html')
 
 @app.route('/logout')
 def logout():
