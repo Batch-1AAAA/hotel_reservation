@@ -11,7 +11,7 @@
 </head>
 <body class="text-center">
     <form action="{{ url_for('reserve') }}" method="post" class="form-signin">
-        <h1>Make a Reservation</h1>
+        <h1>Reserve a Table</h1>
         <label for="name" class="sr-only">Name</label>
         <input type="text" id="name" class="form-control" placeholder="Enter your name" name="name" required autofocus>
         
@@ -29,7 +29,7 @@
         
         <button class="btn btn-lg btn-primary btn-block" type="submit">Reserve</button>
     </form>
-    <div class="form-signin">
+    <div >
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <ul>
@@ -40,8 +40,8 @@
         {% endif %}
         {% endwith %}
     </div>
-    <form action="{{ url_for('logout') }}" method="get" class="form-signin">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
+    <form action="{{ url_for('customer') }}" method="get" class="form-signin">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Back</button>
     </form>
 </body>
 </html>

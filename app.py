@@ -249,7 +249,5 @@ def check_status():
         return render_template('check_status.html')  # Render template without flash messages
     return redirect(url_for('login'))
 
-
-
 if __name__ == '__main__':
     app.run(debug=True)

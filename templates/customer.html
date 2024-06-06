@@ -7,26 +7,51 @@
     <meta name="author" content="">
     <title>NAIR MESS</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link href="static/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .form-signin {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+        .form-signin h1, .form-signin h2 {
+            margin-bottom: 30px;
+        }
+        .form-signin button {
+            margin-bottom: 10px;
+        }
+        .form-signin ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .form-signin li {
+            text-align: left;
+        }
+    </style>
 </head>
-<body class="text-center">
-    <form method="post" class="form-signin">
-        <h1>Customer Interface</h1>
-        <h2 class="h3 mb-3 font-weight-normal">Your reservations</h2>
-        <ul>
-            {% for reservation in customer_reservations %}
-                <li>Name: {{ reservation.name }}, Party Size: {{ reservation.party_size }}</li>
-            {% endfor %}
-        </ul>
-    </form>
-    <form action="{{ url_for('reserve') }}" method="get" class="form-signin">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Reserve a Table</button>
-    </form>
-    <form action="{{ url_for('check_status') }}" method="post" class="form-signin">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Check Reservation Status</button>
-    </form>
-    <form action="{{ url_for('logout') }}" method="get" class="form-signin">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
-    </form>
+<body>
+    <div class="container">
+        <div class="form-signin">
+            <h1>Welcome 👋</h1>
+            
+            <form action="{{ url_for('reserve') }}" method="get">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Reserve a Table</button>
+            </form>
+            <form action="{{ url_for('check_status') }}" method="post">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Check Reservation Status</button>
+            </form>
+            <form action="{{ url_for('logout') }}" method="get">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

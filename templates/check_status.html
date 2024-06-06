@@ -8,50 +8,63 @@
     <title>Check Reservation Status</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .form-signin {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+        .form-signin .form-control {
+            margin-bottom: 10px;
+        }
+        .result-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body class="text-center">
-    <form action="{{ url_for('check_status') }}" method="post" class="form-signin">
-        <h1>Check Reservation Status</h1>
-        <label for="reservation_id" class="sr-only">Reservation ID</label>
-        <input type="text" id="reservation_id" class="form-control" placeholder="Enter Reservation ID" name="reservation_id" required autofocus>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Check Status</button>
-    </form>
-    <form action="{{ url_for('logout') }}" method="get" class="form-signin">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
-    </form>
+    <div class="container">
+        <form class="form-signin" method="post" action="{{ url_for('check_status') }}">
+            <h1 class="h3 mb-3 font-weight-normal">Check Reservation Status</h1>
+            <label for="inputReservationId" class="sr-only">Reservation ID</label>
+            <input type="text" id="inputReservationId" name="reservation_id" class="form-control" placeholder="Reservation ID" required autofocus>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Check Status</button>
+        </form>
+        <form class="form-signin" action="{{ url_for('customer') }}" method="get">
+            <button class="btn btn-lg btn-primar btn-block" type="submit">Back</button>
+        </form>
+    </div>
+    <form class="form-signin">
     {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        <div class="form-signin">
-            <ul>
+        {% if messages %}
+            <div class="result-container">
                 {% for category, message in messages %}
-                    {% if category == 'reservation_status_success' %}
-                        <li class="alert alert-success">{{ message }}</li>
-                    {% elif category == 'reservation_status_error' %}
-                        <li class="alert alert-danger">{{ message }}</li>
-                    {% elif category == 'reservation_status_pending' %}
-                        <li class="alert alert-warning">{{ message }}</li>
-                    {% endif %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
                 {% endfor %}
-            </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% if reservation %}
+        <div class="result-container">
+            <h2>Reservation Details</h2>
+            <p><strong>Reservation ID:</strong> {{ reservation['reservation_id'] }}</p>
+            <p><strong>Name:</strong> {{ reservation['name'] }}</p>
+            <p><strong>Party Size:</strong> {{ reservation['party_size'] }}</p>
+            <p><strong>Status:</strong> {{ reservation['status'] }}</p>
         </div>
     {% endif %}
-    {% endwith %}
-    {% if reservation %}
-        <p>Reservation ID: {{ reservation['reservation_id'] }}</p>
-        <p>Name: {{ reservation['name'] }}</p>
-        <p>Party Size: {{ reservation['party_size'] }}</p>
-        <p>Phone: {{ reservation['phone'] }}</p>
-        <p>Email: {{ reservation['email_id'] }}</p>
-        <p>Special Comments: {{ reservation['special_comments'] }}</p>
-        <p>Status: 
-            {% if reservation['status'] == 'Reserved' %}
-                Reserved
-            {% elif reservation['status'] == 'Pending' %}
-                Pending
-            {% else %}
-                {{ reservation['status'] }}
-            {% endif %}
-        </p>
-    {% endif %}
+    </form>
 </body>
 </html>
